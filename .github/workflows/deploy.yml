@@ -1,0 +1,24 @@
+name: deploy code
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Remote Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Transfer files to Remote Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          #SOURCE: frontend/.next/standalone/
+          SSH_PRIVATE_KEY: ${{ secrets.TEST_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: /var/www/html/development/github_action_test/
