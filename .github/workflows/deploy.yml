@@ -1,24 +1,20 @@
-name: deploy code
-
+name: DEPLOY
 on:
   push:
     branches:
-      - main
+    - main
 
 jobs:
   deploy:
-    name: Deploy to Remote Server
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2
-
-      - name: Transfer files to Remote Server
-        uses: easingthemes/ssh-deploy@main
-        with:
-          #SOURCE: frontend/.next/standalone/
-          SSH_PRIVATE_KEY: ${{ secrets.TEST_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /var/www/html/development/github_action_test/
+    - uses: actions/checkout@v2
+    - name: rsync deployments
+      uses: burnett01/rsync-deployments@5.2
+      with:
+        switches: -avzr
+        remote_path: /var/www/html/development/github_action_test/
+        remote_host: 110.44.116.54
+        remote_user: ubuntu
+        remote_password: ubuntu
+        remote_key: ${{ secrets.DEPLOY_KEY }}
