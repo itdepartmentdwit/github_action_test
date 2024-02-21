@@ -16,5 +16,5 @@ jobs:
         remote_path: /var/www/html/development/github_action_test/
         remote_host: 110.44.116.54
         remote_user: ubuntu
-        remote_password: ubuntu
+        #remote_password: ubuntu
         remote_key: ${{ secrets.DEPLOY_KEY }}
